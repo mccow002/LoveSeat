@@ -37,7 +37,8 @@ namespace LoveSeat
             if (jobj.Value<object>("_rev") == null)
                 jobj.Remove("_rev");
             var resp = GetRequest(databaseBaseUri + "/" + id)
-                .Put().Json()
+                .Put()
+                .Json()
                 .Data(jobj.ToString(Formatting.None))
                 .GetCouchResponse();
             return
@@ -270,7 +271,7 @@ namespace LoveSeat
             if (document.Rev == null)
                 return CreateDocument(document);
 
-            var resp = GetRequest(string.Format("{0}/{1}?rev={2}", databaseBaseUri, document.Id, document.Rev)).Put().Form().Data(document).GetCouchResponse();
+            var resp = GetRequest(string.Format("{0}/{1}?rev={2}", databaseBaseUri, document.Id, document.Rev)).Put().Json().Data(document).GetCouchResponse();
             return resp.GetJObject();
         }
 
